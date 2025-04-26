@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SalesCet96.Web.Data;
+
 namespace SalesCet96.Web
 {
     public class Program
@@ -8,6 +11,13 @@ namespace SalesCet96.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+
+            //Quando a aplicação arrancar, vai usar um serviço de dados. Esse serviço de dados vai usar o meu "DataContext" (pois a tabela "Country" não vem por defeito)
+            builder.Services.AddDbContext<DataContext>(o =>
+            {
+                o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
